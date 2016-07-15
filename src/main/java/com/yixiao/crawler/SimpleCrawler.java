@@ -39,7 +39,7 @@ public class SimpleCrawler {
         HtmlParser htmlParser = new HtmlParser();
         List<String> urlList = htmlParser.getUrlByHtml(url,htmlCont);
         doingUrlList.addAll(urlList);
-        if(doingUrlList.size() > 2000){
+        if(doingUrlList.size() > 10000){
             writeUrlToStore();
             System.exit(-2);
         }

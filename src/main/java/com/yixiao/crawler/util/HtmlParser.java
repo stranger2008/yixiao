@@ -59,6 +59,11 @@ public class HtmlParser {
         return urlList;
     }
 
+    /**
+     * 获取指定url的域名
+     * @param url
+     * @return
+     */
     public String getMainUrl(String url){
         if(null == url || "".equals(url)){
             return null;
