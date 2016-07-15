@@ -1,5 +1,8 @@
 package com.yixiao.crawler;
 
+import com.yixiao.crawler.common.CrawlerConstants;
+import com.yixiao.crawler.store.FileService;
+import com.yixiao.crawler.store.StoreService;
 import com.yixiao.crawler.util.HtmlParser;
 import com.yixiao.crawler.util.HttpClient;
 
@@ -12,7 +15,7 @@ import java.util.List;
  */
 public class SimpleCrawler {
 
-    private List<String> doUrlList = new ArrayList<String>();
+    private List<String> doingUrlList = new ArrayList<String>();
     private List<String> historyUrlList = new ArrayList<String>();
     private List<String> errorUrlList = new ArrayList<String>();
 
@@ -30,24 +33,29 @@ public class SimpleCrawler {
             errorUrlList.add(url);
         }
         historyUrlList.add(url);
-        doUrlList.remove(url);
+        doingUrlList.remove(url);
         HtmlParser htmlParser = new HtmlParser();
         List<String> urlList = htmlParser.getUrlByHtml(url,htmlCont);
-        doUrlList.addAll(urlList);
-        if(doUrlList.size() > 1000){
-            System.out.println(doUrlList);
-            System.out.println(historyUrlList);
-            System.out.println(errorUrlList);
+        doingUrlList.addAll(urlList);
+        if(doingUrlList.size() > 1000){
+            writeUrlToStore();
             System.exit(-2);
         }
-        for(String _url : doUrlList){
+        for(String _url : doingUrlList){
             _url = removeLastSlash(_url);
             crawler(_url);
         }
     }
 
+    public void writeUrlToStore(){
+        StoreService storeService = new FileService();
+        storeService.store(CrawlerConstants.doingUrlName,doingUrlList);
+        storeService.store(CrawlerConstants.errorUrlName,errorUrlList);
+        storeService.store(CrawlerConstants.historyUrlName,historyUrlList);
+    }
+
     /**
-     *
+     * 去掉url后面带的斜杠
      * @param url
      * @return
      */
