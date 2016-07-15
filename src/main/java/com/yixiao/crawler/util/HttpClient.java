@@ -3,6 +3,7 @@ package com.yixiao.crawler.util;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class HttpClient {
      */
     public String getUrlStringByGet(String url){
         org.apache.http.client.HttpClient client = new DefaultHttpClient();
+        client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,2000);
         HttpGet request = new HttpGet(url);
         HttpResponse response;
         StringBuffer sb = new StringBuffer();
@@ -34,7 +36,9 @@ public class HttpClient {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return "";
         }
+        System.out.println("page : " + url + " success.");
         return sb.toString();
     }
 

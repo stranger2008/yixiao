@@ -14,25 +14,30 @@ public class SimpleCrawler {
 
     private List<String> doUrlList = new ArrayList<String>();
     private List<String> historyUrlList = new ArrayList<String>();
+    private List<String> errorUrlList = new ArrayList<String>();
 
     public static void main(String[] args) throws IOException {
-        new SimpleCrawler().crawler("http://www.sina.com.cn");
+        new SimpleCrawler().crawler("http://www.ruibaotong.net");
     }
 
     public void crawler(String url){
-        if(historyUrlList.contains(url)){
+        if(historyUrlList.contains(url) || errorUrlList.contains(url)){
             return;
         }
         HttpClient httpClient = new HttpClient();
         String htmlCont = httpClient.getUrlStringByGet(url);
+        if(htmlCont.equals("")){
+            errorUrlList.add(url);
+        }
         historyUrlList.add(url);
         doUrlList.remove(url);
         HtmlParser htmlParser = new HtmlParser();
         List<String> urlList = htmlParser.getUrlByHtml(url,htmlCont);
         doUrlList.addAll(urlList);
-        if(doUrlList.size() > 3000){
+        if(doUrlList.size() > 1000){
             System.out.println(doUrlList);
             System.out.println(historyUrlList);
+            System.out.println(errorUrlList);
             System.exit(-2);
         }
         for(String _url : doUrlList){
