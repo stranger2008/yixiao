@@ -8,16 +8,18 @@ import com.yixiao.crawler.util.HttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lilianglin on 2016/7/14.
  */
 public class SimpleCrawler {
 
-    private List<String> doingUrlList = new ArrayList<String>();
-    private List<String> historyUrlList = new ArrayList<String>();
-    private List<String> errorUrlList = new ArrayList<String>();
+    private Set<String> doingUrlList = new HashSet<String>();
+    private Set<String> historyUrlList = new HashSet<String>();
+    private Set<String> errorUrlList = new HashSet<String>();
 
     public static void main(String[] args) throws IOException {
         new SimpleCrawler().crawler("http://www.ruibaotong.net");
@@ -37,7 +39,7 @@ public class SimpleCrawler {
         HtmlParser htmlParser = new HtmlParser();
         List<String> urlList = htmlParser.getUrlByHtml(url,htmlCont);
         doingUrlList.addAll(urlList);
-        if(doingUrlList.size() > 1000){
+        if(doingUrlList.size() > 2000){
             writeUrlToStore();
             System.exit(-2);
         }

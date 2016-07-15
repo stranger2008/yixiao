@@ -1,6 +1,7 @@
 package com.yixiao.crawler.store;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 存储介质操作接口
@@ -14,7 +15,7 @@ public interface StoreService {
      * @param urlList
      * @return
      */
-    public boolean store(String storeType,List<String> urlList);
+    public boolean store(String storeType,Set<String> urlList);
 
     /**
      * 根据类型获取url list

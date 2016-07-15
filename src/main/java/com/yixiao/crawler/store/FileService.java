@@ -5,7 +5,9 @@ import com.yixiao.crawler.util.FileUtil;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 文件存储
@@ -14,7 +16,7 @@ import java.util.List;
 public class FileService implements StoreService{
 
     @Override
-    public boolean store(String storeType,List<String> urlList) {
+    public boolean store(String storeType,Set<String> urlList) {
         if(storeType.equals("") || CollectionUtils.isEmpty(urlList)){
             return false;
         }
@@ -32,7 +34,7 @@ public class FileService implements StoreService{
     }
 
     public static void main(String[] args) {
-        List<String> doList = new ArrayList<String>();
+        Set<String> doList = new HashSet<String>();
         doList.add("http://www.ssss.net");
         doList.add("ddddddd");
         new FileService().store(CrawlerConstants.doingUrlName,doList);

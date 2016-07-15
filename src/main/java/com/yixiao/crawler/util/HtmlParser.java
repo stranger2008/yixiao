@@ -11,6 +11,8 @@ import org.htmlparser.visitors.HtmlPage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 网页内容解析工具类
@@ -46,14 +48,38 @@ public class HtmlParser {
             if(href == null){
                 continue;
             }
-            if(!href.startsWith("http://")){
-                href = url + href;
+            if(href.startsWith("http://") || href.startsWith("https://")){
+            }else {
+                href = getMainUrl(url) + href;
             }
             if(!urlList.contains(href)){
                 urlList.add(href);
             }
         }
         return urlList;
+    }
+
+    public String getMainUrl(String url){
+        if(null == url || "".equals(url)){
+            return null;
+        }
+        String domain = domainSub(url,"http://");
+        if(domain.equals("")){
+            domain = domainSub(url,"https://");
+        }
+        return domain;
+    }
+
+    public String domainSub(String url,String type){
+        String domain = "";
+        if(url.startsWith(type)){
+            domain = url.replace(type,"");
+            if(domain.indexOf("/") > -1){
+                domain = domain.substring(0,domain.indexOf("/"));
+            }
+            domain = type + domain;
+        }
+        return domain;
     }
 
 }

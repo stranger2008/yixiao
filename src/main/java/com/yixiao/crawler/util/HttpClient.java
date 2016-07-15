@@ -24,10 +24,10 @@ public class HttpClient {
     public String getUrlStringByGet(String url){
         org.apache.http.client.HttpClient client = new DefaultHttpClient();
         client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,2000);
-        HttpGet request = new HttpGet(url);
-        HttpResponse response;
         StringBuffer sb = new StringBuffer();
         try {
+            HttpGet request = new HttpGet(url);
+            HttpResponse response;
             response = client.execute(request);
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             String line;
