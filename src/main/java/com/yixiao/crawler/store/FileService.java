@@ -4,10 +4,7 @@ import com.yixiao.crawler.common.CrawlerConstants;
 import com.yixiao.crawler.util.FileUtil;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 文件存储
@@ -30,7 +27,9 @@ public class FileService implements StoreService{
 
     @Override
     public List<String> getUrlList(String storeType) {
-        return null;
+        String fStr = FileUtil.read(CrawlerConstants.urlPath + storeType);
+        String fileStr[] = fStr.split("\n");
+        return Arrays.asList(fileStr);
     }
 
     public static void main(String[] args) {

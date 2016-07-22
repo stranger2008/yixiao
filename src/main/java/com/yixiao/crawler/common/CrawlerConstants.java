@@ -20,4 +20,6 @@ public class CrawlerConstants {
 
     public static final String urlPath = crawlerPath + File.separator + "url" + File.separator;
 
+    public static final String pagePath = crawlerPath + File.separator + "page" + File.separator;
+
 }

@@ -3,6 +3,7 @@ package com.yixiao.crawler;
 import com.yixiao.crawler.common.CrawlerConstants;
 import com.yixiao.crawler.store.FileService;
 import com.yixiao.crawler.store.StoreService;
+import com.yixiao.crawler.util.FileUtil;
 import com.yixiao.crawler.util.HtmlParser;
 import com.yixiao.crawler.util.HttpClient;
 
@@ -21,11 +22,39 @@ public class SimpleCrawler {
     private Set<String> historyUrlList = new HashSet<String>();
     private Set<String> errorUrlList = new HashSet<String>();
 
+    private final static int pageNum = 1000;
+
     public static void main(String[] args) throws IOException {
-        new SimpleCrawler().crawler("http://www.ruibaotong.net");
+        SimpleCrawler simpleCrawler = new SimpleCrawler();
+        //simpleCrawler.crawlerUrl("http://www.ruibaotong.net");
+        simpleCrawler.crawlerUrl();
     }
 
-    public void crawler(String url){
+    /**
+     * 根据爬下来的url地址下载网页并保存到文件中
+     */
+    public void crawlerUrl() {
+        List<String> _urlList = new ArrayList<String>();
+        StoreService storeService = new FileService();
+        List<String> doingList = storeService.getUrlList(CrawlerConstants.doingUrlName);
+        List<String> historyList = storeService.getUrlList(CrawlerConstants.historyUrlName);
+        _urlList.addAll(doingList);
+        _urlList.addAll(historyList);
+        HttpClient httpClient = new HttpClient();
+        int i = 1;
+        for(String url : _urlList){
+            String htmlCont = httpClient.getUrlStringByGet(url);
+            FileUtil.write(CrawlerConstants.pagePath + i + ".html" ,htmlCont);
+            i++;
+        }
+
+    }
+
+    /**
+     * 根据根url爬取相关链接
+     * @param url
+     */
+    public void crawlerUrl(String url){
         if(historyUrlList.contains(url) || errorUrlList.contains(url)){
             return;
         }
@@ -39,13 +68,13 @@ public class SimpleCrawler {
         HtmlParser htmlParser = new HtmlParser();
         List<String> urlList = htmlParser.getUrlByHtml(url,htmlCont);
         doingUrlList.addAll(urlList);
-        if(doingUrlList.size() > 10000){
+        if(doingUrlList.size() > pageNum){
             writeUrlToStore();
             System.exit(-2);
         }
         for(String _url : doingUrlList){
             _url = removeLastSlash(_url);
-            crawler(_url);
+            crawlerUrl(_url);
         }
     }
 
@@ -53,7 +82,7 @@ public class SimpleCrawler {
         StoreService storeService = new FileService();
         storeService.store(CrawlerConstants.doingUrlName,doingUrlList);
         storeService.store(CrawlerConstants.errorUrlName,errorUrlList);
-        storeService.store(CrawlerConstants.historyUrlName,historyUrlList);
+        storeService.store(CrawlerConstants.historyUrlName, historyUrlList);
     }
 
     /**

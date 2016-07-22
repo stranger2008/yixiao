@@ -22,4 +22,14 @@ public class FileUtil {
         return true;
     }
 
+    public static String read(String filePath){
+        File file = new File(filePath);
+        try {
+            return FileUtils.readFileToString(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    };
+
 }
