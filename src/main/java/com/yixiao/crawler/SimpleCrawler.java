@@ -3,9 +3,9 @@ package com.yixiao.crawler;
 import com.yixiao.crawler.common.CrawlerConstants;
 import com.yixiao.crawler.store.FileService;
 import com.yixiao.crawler.store.StoreService;
-import com.yixiao.crawler.util.FileUtil;
-import com.yixiao.crawler.util.HtmlParser;
-import com.yixiao.crawler.util.HttpClient;
+import com.yixiao.util.FileUtil;
+import com.yixiao.util.HtmlParser;
+import com.yixiao.util.HttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.yixiao.crawler.store;
 
 import com.yixiao.crawler.common.CrawlerConstants;
-import com.yixiao.crawler.util.FileUtil;
+import com.yixiao.util.FileUtil;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.*;

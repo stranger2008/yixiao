@@ -1,4 +1,4 @@
-package com.yixiao.crawler.util;
+package com.yixiao.util;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;

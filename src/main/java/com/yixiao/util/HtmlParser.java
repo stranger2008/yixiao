@@ -1,4 +1,4 @@
-package com.yixiao.crawler.util;
+package com.yixiao.util;
 
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -11,8 +11,6 @@ import org.htmlparser.visitors.HtmlPage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 网页内容解析工具类
