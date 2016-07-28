@@ -22,4 +22,11 @@ public class CrawlerConstants {
 
     public static final String pagePath = crawlerPath + File.separator + "page" + File.separator;
 
+    public static final String indexPath = crawlerPath + File.separator + "index" + File.separator;
+
+    //倒排列表索引文件名称
+    public static final String postingList = "postingList";
+    //文档索引文件名称
+    public static final String documentName = "doc";
+
 }
