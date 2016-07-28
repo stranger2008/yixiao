@@ -1,10 +1,12 @@
 package com.yixiao.index.model;
 
+import java.io.Serializable;
+
 /**
  * 词元
  * Created by lilianglin on 2016/7/28.
  */
-public class Term {
+public class Term implements Serializable{
 
     private long id;
     private String name;
