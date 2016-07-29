@@ -38,4 +38,8 @@ public class Document implements Serializable{
                 ", maxTf=" + maxTf +
                 '}';
     }
+
+    public static void main(String[] args) {
+        System.out.println( 4D / 64D);
+    }
 }

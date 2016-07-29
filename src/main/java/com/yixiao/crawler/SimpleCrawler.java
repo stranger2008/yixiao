@@ -22,7 +22,7 @@ public class SimpleCrawler {
     private Set<String> historyUrlList = new HashSet<String>();
     private Set<String> errorUrlList = new HashSet<String>();
 
-    private final static int pageNum = 1000;
+    private final static int pageNum = 100;
 
     public static void main(String[] args) throws IOException {
         SimpleCrawler simpleCrawler = new SimpleCrawler();
