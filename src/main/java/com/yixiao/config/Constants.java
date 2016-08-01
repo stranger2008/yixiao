@@ -1,12 +1,12 @@
-package com.yixiao.crawler.common;
+package com.yixiao.config;
 
 import java.io.File;
 
 /**
- * 爬虫常量
+ * 常量
  * Created by lilianglin on 2016/7/15.
  */
-public class CrawlerConstants {
+public class Constants {
 
     public static final String doingUrlName = "doingUrl";
 
@@ -30,5 +30,7 @@ public class CrawlerConstants {
     public static final String documentName = "doc";
     //词典索引文件名称
     public static final String termName = "term";
+
+    public static final String THREAD_COMMON_KEY_THREAD_NAME = "thread-name";
 
 }

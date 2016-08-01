@@ -1,6 +1,6 @@
 package com.yixiao.crawler;
 
-import com.yixiao.crawler.common.CrawlerConstants;
+import com.yixiao.config.Constants;
 import com.yixiao.crawler.store.FileService;
 import com.yixiao.crawler.store.StoreService;
 import com.yixiao.util.FileUtil;
@@ -36,15 +36,15 @@ public class SimpleCrawler {
     public void crawlerUrl() {
         List<String> _urlList = new ArrayList<String>();
         StoreService storeService = new FileService();
-        List<String> doingList = storeService.getUrlList(CrawlerConstants.doingUrlName);
-        List<String> historyList = storeService.getUrlList(CrawlerConstants.historyUrlName);
+        List<String> doingList = storeService.getUrlList(Constants.doingUrlName);
+        List<String> historyList = storeService.getUrlList(Constants.historyUrlName);
         _urlList.addAll(doingList);
         _urlList.addAll(historyList);
         HttpClient httpClient = new HttpClient();
         int i = 1;
         for(String url : _urlList){
             String htmlCont = httpClient.getUrlStringByGet(url);
-            FileUtil.write(CrawlerConstants.pagePath + i + ".html" ,htmlCont);
+            FileUtil.write(Constants.pagePath + i + ".html" ,htmlCont);
             i++;
         }
 
@@ -80,9 +80,9 @@ public class SimpleCrawler {
 
     public void writeUrlToStore(){
         StoreService storeService = new FileService();
-        storeService.store(CrawlerConstants.doingUrlName,doingUrlList);
-        storeService.store(CrawlerConstants.errorUrlName,errorUrlList);
-        storeService.store(CrawlerConstants.historyUrlName, historyUrlList);
+        storeService.store(Constants.doingUrlName,doingUrlList);
+        storeService.store(Constants.errorUrlName,errorUrlList);
+        storeService.store(Constants.historyUrlName, historyUrlList);
     }
 
     /**

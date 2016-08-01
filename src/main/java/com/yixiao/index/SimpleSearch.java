@@ -1,6 +1,6 @@
 package com.yixiao.index;
 
-import com.yixiao.crawler.common.CrawlerConstants;
+import com.yixiao.config.Constants;
 import com.yixiao.index.model.*;
 import com.yixiao.util.FileUtil;
 import com.yixiao.util.WordSegment;
@@ -22,10 +22,10 @@ public class SimpleSearch {
 
     public void search(String query){
         //获取倒排列表
-        Map<Long,List<Posting>> postingMap = (Map<Long,List<Posting>>) FileUtil.getObject(CrawlerConstants.indexPath + CrawlerConstants.postingList);
-        SegDocment segDocment = (SegDocment)FileUtil.getObject(CrawlerConstants.indexPath + CrawlerConstants.documentName);
+        Map<Long,List<Posting>> postingMap = (Map<Long,List<Posting>>) FileUtil.getObject(Constants.indexPath + Constants.postingList);
+        SegDocment segDocment = (SegDocment)FileUtil.getObject(Constants.indexPath + Constants.documentName);
         Map<Long,Document> docIdDocMap = segDocment.getDocIdDocMap();
-        Map<String,Long> termMap = (Map<String,Long>)FileUtil.getObject(CrawlerConstants.indexPath + CrawlerConstants.termName);
+        Map<String,Long> termMap = (Map<String,Long>)FileUtil.getObject(Constants.indexPath + Constants.termName);
         //给查询字符串分词
         Map<String,Integer> tfMap = WordSegment.getWordFreq(query);
         //文库文档总数

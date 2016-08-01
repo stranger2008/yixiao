@@ -1,6 +1,6 @@
 package com.yixiao.index;
 
-import com.yixiao.crawler.common.CrawlerConstants;
+import com.yixiao.config.Constants;
 import com.yixiao.index.model.Document;
 import com.yixiao.index.model.Posting;
 import com.yixiao.index.model.SegDocment;
@@ -29,7 +29,7 @@ public class SimpleIndex {
 
     public static void main(String[] args) throws IOException {
         SimpleIndex simpleIndex = new SimpleIndex();
-        simpleIndex.createIndex(CrawlerConstants.pagePath);
+        simpleIndex.createIndex(Constants.pagePath);
     }
 
     public void createIndex(String fileDir){
@@ -51,9 +51,9 @@ public class SimpleIndex {
         segDocment.setDocIdDocMap(docIdDocMap);
         segDocment.setDocNum(docLen);
         //持久化索引对象
-        FileUtil.writeObject(postingMap,CrawlerConstants.indexPath + CrawlerConstants.postingList);
-        FileUtil.writeObject(segDocment,CrawlerConstants.indexPath + CrawlerConstants.documentName);
-        FileUtil.writeObject(termMap,CrawlerConstants.indexPath + CrawlerConstants.termName);
+        FileUtil.writeObject(postingMap, Constants.indexPath + Constants.postingList);
+        FileUtil.writeObject(segDocment, Constants.indexPath + Constants.documentName);
+        FileUtil.writeObject(termMap, Constants.indexPath + Constants.termName);
     }
 
     /**

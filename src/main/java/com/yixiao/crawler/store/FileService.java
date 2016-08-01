@@ -1,6 +1,6 @@
 package com.yixiao.crawler.store;
 
-import com.yixiao.crawler.common.CrawlerConstants;
+import com.yixiao.config.Constants;
 import com.yixiao.util.FileUtil;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -22,12 +22,12 @@ public class FileService implements StoreService{
             sb.append(url);
             sb.append("\n");
         }
-        return FileUtil.write(CrawlerConstants.urlPath + storeType,sb.toString());
+        return FileUtil.write(Constants.urlPath + storeType,sb.toString());
     }
 
     @Override
     public List<String> getUrlList(String storeType) {
-        String fStr = FileUtil.read(CrawlerConstants.urlPath + storeType);
+        String fStr = FileUtil.read(Constants.urlPath + storeType);
         String fileStr[] = fStr.split("\n");
         return Arrays.asList(fileStr);
     }
@@ -36,7 +36,7 @@ public class FileService implements StoreService{
         Set<String> doList = new HashSet<String>();
         doList.add("http://www.ssss.net");
         doList.add("ddddddd");
-        new FileService().store(CrawlerConstants.doingUrlName,doList);
+        new FileService().store(Constants.doingUrlName,doList);
     }
 
 }
