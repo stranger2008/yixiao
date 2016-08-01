@@ -1,18 +1,12 @@
 package com.yixiao.index;
 
 import com.yixiao.crawler.common.CrawlerConstants;
-import com.yixiao.index.model.Document;
-import com.yixiao.index.model.Posting;
-import com.yixiao.index.model.SegDocment;
-import com.yixiao.index.model.VectorMatrix;
+import com.yixiao.index.model.*;
 import com.yixiao.util.FileUtil;
 import com.yixiao.util.WordSegment;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 搜索
@@ -20,8 +14,10 @@ import java.util.Map;
  */
 public class SimpleSearch {
     public static void main(String[] args) {
+        long start = System.currentTimeMillis();
         SimpleSearch simpleSearch = new SimpleSearch();
-        simpleSearch.search("科学研究煤炭");
+        simpleSearch.search("科学");
+        System.out.println(System.currentTimeMillis() - start);
     }
 
     public void search(String query){
@@ -43,7 +39,7 @@ public class SimpleSearch {
             if(CollectionUtils.isEmpty(postingList)){
                 continue;
             }
-            System.out.println(key + "===" + postingList);
+            //System.out.println(key + "===" + postingList);
             //出现该词的文档数
             int termInDocNum = postingList.size() + 1;
             //idf
@@ -76,25 +72,33 @@ public class SimpleSearch {
             }
             vectorMatrixList.add(vectorMatrix);
         }
-        System.out.println(vectorMap);
+        //System.out.println(vectorMap);
 
         //计算文档权重
         List<VectorMatrix> queryMatrixes = vectorMap.get(-1L);
-        Map<Long,Double> docWeightMap = new HashMap<Long, Double>(queryMatrixes.size());
+        List<DocWeight> docWeightList = new ArrayList<DocWeight>(queryMatrixes.size());
         for (Map.Entry<Long,List<VectorMatrix>> entry : vectorMap.entrySet()) {
             List<VectorMatrix> docMatrixes = entry.getValue();
             Long _docId = entry.getKey();
             if(_docId == -1L){
                 continue;
             }
-            setDocWeight(docWeightMap,_docId,queryMatrixes,docMatrixes);
+            setDocWeight(docWeightList,_docId,queryMatrixes,docMatrixes);
         }
-
-
-
+        //降序
+        Collections.reverse(docWeightList);
+        System.out.println(docWeightList);
     }
 
-    public void setDocWeight(Map<Long,Double> docWeightMap,long docId,List<VectorMatrix> queryMatrixes, List<VectorMatrix> docMatrixes){
+    /**
+     * 查询文档与指定文档的权重计算
+     * 公式 ：cos@ = (a1b1+a2b2 ... anbn)/[根号(a1^2+a2^2 ... an^2) * 根号(b1^2+b2^2 ... bn^2)]
+     * @param docWeightList
+     * @param docId
+     * @param queryMatrixes
+     * @param docMatrixes
+     */
+    public void setDocWeight(List<DocWeight> docWeightList,long docId,List<VectorMatrix> queryMatrixes, List<VectorMatrix> docMatrixes){
         double weight = 0D;
         //分母
         double denominator = 0D,deLeft = 0D,deRight = 0D;
@@ -114,7 +118,7 @@ public class SimpleSearch {
         deRight = Math.sqrt(deRight);
         denominator = deLeft * deRight;
         weight = molecule / denominator;
-        docWeightMap.put(docId,weight);
+        docWeightList.add(new DocWeight(docId,weight));
     }
 
     /**
